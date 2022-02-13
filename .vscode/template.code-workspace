@@ -63,6 +63,8 @@
       "ms-vscode.cpptools",
       // java
       "vscjava.vscode-java-pack",
+      // python
+      "ms-python.python",
     ],
   },
 }
