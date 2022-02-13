@@ -1,7 +1,7 @@
 # fetch the delay of the train
 
 ## 概要
-　[yahoo路線の運行状況](https://transit.yahoo.co.jp/diainfo)をスクレイピングして任意の路線の遅延状況を取得する。
+　[yahoo路線の運行状況](https://transit.yahoo.co.jp/diainfo)をスクレイピングして任意の路線の遅延状況を取得する。出力はjson形式。
 
 ## 環境
 - wsl2 on ubuntu20.04
