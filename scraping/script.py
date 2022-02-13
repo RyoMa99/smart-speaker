@@ -1,4 +1,4 @@
-from email import message
+import json
 import requests
 from bs4 import BeautifulSoup
 
@@ -8,14 +8,28 @@ URL = "https://transit.yahoo.co.jp/diainfo/128/0"
 # HTMLの取得
 res = requests.get(URL)
 
-# BeautifulSoupでの解析
+# BeautifulSoupオブジェクトの生成
 soup = BeautifulSoup(res.text,"html.parser")
 
-if soup.find("dd",class_="trouble"):
-  message = "遅延しています"
-elif soup.find("dd",class_="normal"):
-  message = "遅延はありません"
-else:
-  message = "問題が発生しました"
+message = {
+  "title": "",
+  "content": "",
+}
 
-print(message)
+if soup.find("dd",class_="trouble"):
+  title = soup.find("dd",class_="trouble").previous_sibling
+  title.find("span").extract()
+  message["title"] = title.get_text()
+
+  message["content"] = soup.find("dd",class_="trouble").get_text()
+
+elif soup.find("dd",class_="normal"):
+  title = soup.find("dd",class_="normal").previous_sibling
+  title.find("span").extract()
+  message["title"] = title.get_text()
+  
+  message["content"] = soup.find("dd",class_="normal").get_text()
+else:
+  message["title"] = "問題が発生しました"
+
+print(json.dumps(message,ensure_ascii=False))
